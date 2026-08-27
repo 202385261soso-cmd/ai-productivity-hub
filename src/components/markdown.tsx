@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, type ReactElement } from "react";
 
 /** Minimal, dependency-free renderer for the structured markdown the AI returns. */
 function inline(text: string) {
@@ -24,7 +24,7 @@ function inline(text: string) {
 
 export function Markdown({ text }: { text: string }) {
   const lines = text.split("\n");
-  const blocks: JSX.Element[] = [];
+  const blocks: ReactElement[] = [];
   let list: string[] = [];
 
   const flush = () => {

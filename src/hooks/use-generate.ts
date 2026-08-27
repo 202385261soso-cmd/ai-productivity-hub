@@ -4,7 +4,9 @@ import { toast } from "sonner";
 import { generateWithAi } from "@/lib/ai.functions";
 import { recordActivity, type ToolKey } from "@/lib/activity";
 
-type Payload = Parameters<typeof generateWithAi>[0] extends { data: infer D } ? D : never;
+import type { GenerateRequest } from "@/lib/ai-types";
+
+type Payload = GenerateRequest;
 
 export function useGenerate(tool: ToolKey, activityLabel: (input: string) => string) {
   const run = useServerFn(generateWithAi);

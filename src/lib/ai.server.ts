@@ -6,16 +6,43 @@
  * quality requirements and responsible-AI constraints.
  */
 
-export type ChatTurn = { role: "user" | "assistant"; content: string };
+import { z } from "zod";
+import type { ChatTurn, GenerateRequest, GenerateResult } from "./ai-types";
 
-export type GenerateRequest =
-  | { tool: "email"; purpose: string; recipient: string; tone: string; length: string }
-  | { tool: "meeting"; notes: string }
-  | { tool: "task"; tasks: string; hours: string; priority: string; period: string }
-  | { tool: "research"; topic: string; responseType: string }
-  | { tool: "chat"; messages: ChatTurn[] };
+export type { ChatTurn, GenerateRequest, GenerateResult };
 
-export type GenerateResult = { text: string; demo: boolean };
+const chatTurnSchema = z.object({
+  role: z.enum(["user", "assistant"]),
+  content: z.string().min(1),
+});
+
+const generateInputSchema = z.discriminatedUnion("tool", [
+  z.object({
+    tool: z.literal("email"),
+    purpose: z.string().min(1).max(2000),
+    recipient: z.string().min(1).max(1000),
+    tone: z.enum(["Formal", "Friendly", "Professional", "Persuasive"]),
+    length: z.enum(["Short", "Medium", "Detailed"]),
+  }),
+  z.object({ tool: z.literal("meeting"), notes: z.string().min(20).max(20000) }),
+  z.object({
+    tool: z.literal("task"),
+    tasks: z.string().min(1).max(6000),
+    hours: z.string().min(1).max(200),
+    priority: z.enum(["Low", "Medium", "High", "Critical"]),
+    period: z.enum(["Daily", "Weekly"]),
+  }),
+  z.object({
+    tool: z.literal("research"),
+    topic: z.string().min(3).max(2000),
+    responseType: z.enum(["Summary", "Key Insights", "Recommendations"]),
+  }),
+  z.object({ tool: z.literal("chat"), messages: z.array(chatTurnSchema).min(1).max(40) }),
+]);
+
+export function parseGenerateInput(input: unknown): GenerateRequest {
+  return generateInputSchema.parse(input) as GenerateRequest;
+}
 
 const RESPONSIBLE_AI = `RESPONSIBLE-AI CONSTRAINTS (non-negotiable):
 - Never fabricate facts, statistics, citations, sources, URLs, names or quotes. If something is unknown, say so plainly.

@@ -7,7 +7,7 @@ An integrated, single-platform AI assistant for everyday office work: drafting e
 Attic is a responsive web application built with React 19, TanStack Start and Tailwind CSS v4. It presents five AI-powered tools inside one workspace with a persistent left sidebar on desktop and a scrollable pill navigation on mobile. All AI calls are executed server-side; no API key ever reaches the browser.
 
 ## Team Members
--Nangamso Msizazwe
+Nangamso Msizazwe
 
 ## Problem statement
 

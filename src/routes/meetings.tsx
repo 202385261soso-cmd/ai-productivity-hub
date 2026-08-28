@@ -25,7 +25,10 @@ function MeetingTool() {
   const { output, setOutput, demo, loading, error, generate, reset } = useGenerate("meeting", label);
 
   const onGenerate = () => {
-    if (notes.trim().length < 20) return toast.error("Paste at least a few lines of meeting notes first.");
+    if (notes.trim().length < 20) {
+      toast.error("Paste at least a few lines of meeting notes first.");
+      return;
+    }
     void generate({ tool: "meeting", notes: notes.trim() }, notes.trim());
   };
 

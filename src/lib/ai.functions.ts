@@ -3,4 +3,4 @@ import { parseGenerateInput, runGeneration, type GenerateResult } from "./ai.ser
 
 export const generateWithAi = createServerFn({ method: "POST" })
   .inputValidator((input: unknown) => parseGenerateInput(input))
-  .handler(async ({ data, signal }): Promise<GenerateResult> => runGeneration(data, signal));
+  .handler(async ({ data }): Promise<GenerateResult> => runGeneration(data));

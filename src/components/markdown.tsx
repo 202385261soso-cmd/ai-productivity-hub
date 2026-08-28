@@ -47,7 +47,7 @@ export function Markdown({ text }: { text: string }) {
     const ordered = line.match(/^\s*\d+\.\s+(.*)$/);
 
     if (bullet) {
-      list.push(bullet[1]);
+      list.push(bullet[1] ?? "");
       return;
     }
     flush();

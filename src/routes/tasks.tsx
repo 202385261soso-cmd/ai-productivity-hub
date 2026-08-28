@@ -32,8 +32,14 @@ function TaskTool() {
   const { output, setOutput, demo, loading, error, generate, reset } = useGenerate("task", label);
 
   const onGenerate = () => {
-    if (!tasks.trim()) return toast.error("List at least one task to plan.");
-    if (!hours.trim()) return toast.error("Tell the planner how much time you have.");
+    if (!tasks.trim()) {
+      toast.error("List at least one task to plan.");
+      return;
+    }
+    if (!hours.trim()) {
+      toast.error("Tell the planner how much time you have.");
+      return;
+    }
     void generate(
       { tool: "task", tasks: tasks.trim(), hours: hours.trim(), priority, period },
       period.toLowerCase(),

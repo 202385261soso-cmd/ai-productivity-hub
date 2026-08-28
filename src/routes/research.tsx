@@ -29,7 +29,10 @@ function ResearchTool() {
   const { output, setOutput, demo, loading, error, generate, reset } = useGenerate("research", label);
 
   const onGenerate = () => {
-    if (topic.trim().length < 3) return toast.error("Enter a topic or question to research.");
+    if (topic.trim().length < 3) {
+      toast.error("Enter a topic or question to research.");
+      return;
+    }
     void generate({ tool: "research", topic: topic.trim(), responseType }, topic.trim());
   };
 

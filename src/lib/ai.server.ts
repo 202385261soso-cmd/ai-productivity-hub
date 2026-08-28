@@ -169,10 +169,7 @@ function demoResult(): GenerateResult {
 }
 
 /** Calls the Lovable AI Gateway Responses API and accumulates the streamed text. */
-export async function runGeneration(
-  req: GenerateRequest,
-  signal?: AbortSignal,
-): Promise<GenerateResult> {
+export async function runGeneration(req: GenerateRequest): Promise<GenerateResult> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) return demoResult();
 
@@ -185,7 +182,6 @@ export async function runGeneration(
       "Lovable-API-Key": apiKey,
       "X-Lovable-AIG-SDK": "fetch",
     },
-    signal,
     body: JSON.stringify({
       model: "openai/gpt-5.6-terra",
       stream: true,

@@ -32,11 +32,11 @@ function EmailTool() {
   const { output, setOutput, demo, loading, error, generate, reset } = useGenerate("email", label);
 
   const onGenerate = () => {
-    if (!purpose.trim())
+    if (!purpose.trim()) {
       toast.error("Tell the assistant what the email is for.");
       return;
     }
-    if (!recipient.trim())
+    if (!recipient.trim()) {
       toast.error("Add who the email is going to.");
       return;
     }
